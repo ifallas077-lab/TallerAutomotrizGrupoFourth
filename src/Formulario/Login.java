@@ -3,13 +3,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Formulario;
+
 import javax.swing.JOptionPane;
+import modelo.Usuario;
+
 /**
  *
  * @author crist
  */
 public class Login extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Login.class.getName());
 
     /**
@@ -100,34 +103,40 @@ public class Login extends javax.swing.JFrame {
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
 
-   String usuario = txtUsuario.getText();
-    String contrasena = new String(txtContrasena.getPassword());
+        String usuario = txtUsuario.getText();
+        String contrasena = new String(txtContrasena.getPassword());
+        Usuario admin = new Usuario(1, "admin", "1234", "ADMIN", true);
+        Usuario operador = new Usuario(2, "operador", "5678", "OPERATIVO", true);
 
-    if (usuario.equals("admin") && contrasena.equals("1234")) {
+        if (usuario.equals(admin.getNombreUsuario())
+                && contrasena.equals(admin.getContrasena())
+                && admin.isActivo()) {
 
-        JOptionPane.showMessageDialog(this, "Bienvenido ADMIN");
+            JOptionPane.showMessageDialog(this, "Bienvenido ADMIN");
 
-        MenuPrincipal menu = new MenuPrincipal();
-        menu.setVisible(true);
+            MenuPrincipal menu = new MenuPrincipal(admin.getRol());
+            menu.setVisible(true);
 
-        this.dispose();
+            this.dispose();
 
-    } else if (usuario.equals("operador") && contrasena.equals("5678")) {
+        } else if (usuario.equals(operador.getNombreUsuario())
+                && contrasena.equals(operador.getContrasena())
+                && operador.isActivo()) {
 
-        JOptionPane.showMessageDialog(this, "Bienvenido OPERATIVO");
+            JOptionPane.showMessageDialog(this, "Bienvenido OPERATIVO");
 
-        MenuPrincipal menu = new MenuPrincipal();
-        menu.setVisible(true);
+            MenuPrincipal menu = new MenuPrincipal(operador.getRol());
+            menu.setVisible(true);
 
-        this.dispose();
+            this.dispose();
 
-    } else {
+        } else {
 
-        JOptionPane.showMessageDialog(
-                this,
-                "Usuario o contraseña incorrectos"
-        );
-    }
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Usuario o contraseña incorrectos"
+            );
+        }
 
     }//GEN-LAST:event_btnIngresarActionPerformed
 
