@@ -5,14 +5,14 @@ public class Usuario {
 
     private int id;
     private String nombreUsuario;
-    private String contrasenaHash;
+    private String contrasena;
     private String rol;
     private boolean activo;
 
-    public Usuario(int id, String nombreUsuario, String contrasenaHash, String rol, boolean activo) {
+    public Usuario(int id, String nombreUsuario, String contrasena, String rol, boolean activo) {
         this.id = id;
         this.nombreUsuario = nombreUsuario;
-        this.contrasenaHash = contrasenaHash;
+        this.contrasena = contrasena;
         this.rol = rol;
         this.activo = activo;
     }
@@ -21,8 +21,8 @@ public class Usuario {
         return nombreUsuario;
     }
 
-    public String getContrasenaHash() {
-        return contrasenaHash;
+    public String getContrasena() {
+        return contrasena;
     }
 
     public String getRol() {
@@ -41,8 +41,8 @@ public class Usuario {
         this.nombreUsuario = nombreUsuario;
     }
 
-    public void setContrasenaHash(String contrasenaHash) {
-        this.contrasenaHash = contrasenaHash;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     public void setRol(String rol) {

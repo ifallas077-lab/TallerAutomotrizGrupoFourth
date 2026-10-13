@@ -9,7 +9,7 @@ package Formulario;
  * @author crist
  */
 public class MenuPrincipal extends javax.swing.JFrame {
-    
+    private String rol;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MenuPrincipal.class.getName());
 
     /**
@@ -18,6 +18,16 @@ public class MenuPrincipal extends javax.swing.JFrame {
     public MenuPrincipal() {
         initComponents();
     }
+    
+    public MenuPrincipal(String rol){
+        initComponents();
+        this.rol = rol;
+        if(rol.equals("OPERATIVO")){
+            btnTecnicos.setEnabled(false);
+            btnPagos.setEnabled(false);
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -58,6 +68,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         btnVehiculos.setText("VEHICULOS");
         btnVehiculos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnVehiculos.addActionListener(this::btnVehiculosActionPerformed);
 
         btnOrdenesdeTrabajo.setText("ORDENES DE SERVICIO");
         btnOrdenesdeTrabajo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -146,7 +157,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
-GestionClientes clientes = new GestionClientes();
+GestionClientes clientes = new GestionClientes(rol);
 clientes.setVisible(true);
 this.dispose();
     }//GEN-LAST:event_btnClientesActionPerformed
@@ -154,6 +165,12 @@ this.dispose();
     private void btnRepuestosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRepuestosActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnRepuestosActionPerformed
+
+    private void btnVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVehiculosActionPerformed
+GestionVehiculos ventana = new GestionVehiculos(rol);
+ventana.setVisible(true);
+this.dispose();
+    }//GEN-LAST:event_btnVehiculosActionPerformed
 
     /**
      * @param args the command line arguments

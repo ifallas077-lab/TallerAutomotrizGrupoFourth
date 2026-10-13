@@ -14,6 +14,7 @@ import java.util.ArrayList;
  * @author crist
  */
 public class GestionClientes extends javax.swing.JFrame {
+    private String rol;
      private static ArrayList<Cliente> listaClientes = new ArrayList<>();
 
     
@@ -25,6 +26,12 @@ public class GestionClientes extends javax.swing.JFrame {
     public GestionClientes() {
         initComponents();
             cargarClientes();
+    }
+    
+    public GestionClientes(String rol){
+        initComponents();
+        this.rol = rol;
+        cargarClientes();
     }
     private void cargarClientes() {
 
@@ -340,7 +347,7 @@ public class GestionClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        MenuPrincipal menu = new MenuPrincipal();
+        MenuPrincipal menu = new MenuPrincipal(rol);
         menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
