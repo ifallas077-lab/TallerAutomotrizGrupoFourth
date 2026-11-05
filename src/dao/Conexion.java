@@ -35,7 +35,7 @@ public class Conexion {
                 telefono TEXT,
                 correo TEXT,
                 direccion TEXT,
-                fecha de registro TEXT,
+                fecha_registro TEXT,
                 estado INTEGER NOT NULL DEFAULT 1)""";
         try (Connection con = get(); Statement st = con.createStatement()) {
             st.execute(sqlClientes);
