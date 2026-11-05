@@ -7,7 +7,8 @@ package Formulario;
 import modelo.Cliente;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import java.util.ArrayList;
+import dao.ClienteDAO;
+import dao.Conexion;
 
 /**
  *
@@ -16,11 +17,10 @@ import java.util.ArrayList;
 public class GestionClientes extends javax.swing.JFrame {
 
     private String rol;
-    private static ArrayList<Cliente> listaClientes = new ArrayList<>();
+    private final ClienteDAO dao = new ClienteDAO();
 
     private static final java.util.logging.Logger logger =
             java.util.logging.Logger.getLogger(GestionClientes.class.getName());
-
     /**
      * Creates new form GestionClientes
      */
@@ -35,24 +35,66 @@ public GestionClientes(String rol) {
 }
  private void cargarClientes() {
 
-    DefaultTableModel modelo =
-            (DefaultTableModel) tablaClientes.getModel();
+        DefaultTableModel modelo
+                = (DefaultTableModel) tablaClientes.getModel();
 
-    modelo.setRowCount(0);
+        modelo.setRowCount(0);
 
-    for (Cliente cliente : listaClientes) {
+        for (Cliente cliente : dao.listar()) {
 
-        modelo.addRow(new Object[]{
-            cliente.getCedula(),
-            cliente.getNombre(),
-            cliente.getTelefono(),
-            cliente.getCorreo(),
-            cliente.getDireccion(),
-            cliente.getFechaRegistro(),
-            cliente.isEstado() ? "Activo" : "Inactivo"
-        });
+            modelo.addRow(new Object[]{
+                cliente.getCedula(),
+                cliente.getNombre(),
+                cliente.getTelefono(),
+                cliente.getCorreo(),
+                cliente.getDireccion(),
+                cliente.getFechaRegistro(),
+                cliente.isEstado() ? "Activo" : "Inactivo"
+            });
+        }
     }
-}
+
+    private boolean camposValidos() {
+        String telefono = txtTelefono.getText().trim();
+        String correo = txtCorreo.getText().trim();
+        if (txtCedula.getText().trim().isEmpty() || txtNombre.getText().trim().isEmpty()
+                || telefono.isEmpty() || correo.isEmpty()
+                || txtDireccion.getText().trim().isEmpty()
+                || txtFechaRegistro.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Complete todos los campos");
+            return false;
+        }
+        if (!telefono.matches("[0-9]+")) {
+            JOptionPane.showMessageDialog(this, "El telefono debe contener solo numeros");
+            return false;
+        }
+        if (!correo.contains("@")) {
+            JOptionPane.showMessageDialog(this, "Ingrese un correo valido");
+            return false;
+        }
+        return true;
+    }
+
+    private void limpiarCampos() {
+        txtCedula.setText("");
+        txtNombre.setText("");
+        txtTelefono.setText("");
+        txtCorreo.setText("");
+        txtDireccion.setText("");
+        txtFechaRegistro.setText("");
+        chkEstado.setSelected(false);
+    }
+
+    private Cliente clienteDesdeFormulario(String cedula) {
+        return new Cliente(
+                cedula,
+                txtNombre.getText().trim(),
+                txtTelefono.getText().trim(),
+                txtCorreo.getText().trim(),
+                txtDireccion.getText().trim(),
+                txtFechaRegistro.getText().trim(),
+                chkEstado.isSelected());
+    }
 
 
 
@@ -299,7 +341,7 @@ public GestionClientes(String rol) {
             direccion, fechaRegistro, estado
     );
 
-    listaClientes.add(cliente);
+  dao.guardar(cliente);
 
     modelo.addRow(new Object[]{
         cedula, nombre, telefono, correo,
@@ -404,32 +446,26 @@ menu.setVisible(true);
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-int fila = tablaClientes.getSelectedRow();
-
-if (fila == -1) {
-    JOptionPane.showMessageDialog(this, "Seleccione un cliente de la tabla");
-    return;
-}
-
-int respuesta = JOptionPane.showConfirmDialog(
-        this,
-        "¿Está seguro de eliminar este cliente?",
-        "Confirmar eliminación",
-        JOptionPane.YES_NO_OPTION
-);
-
-if (respuesta == JOptionPane.YES_OPTION) {
-
-    listaClientes.remove(fila);
-
-    DefaultTableModel modelo =
-            (DefaultTableModel) tablaClientes.getModel();
-
-    modelo.removeRow(fila);
-
-    JOptionPane.showMessageDialog(this, "Cliente eliminado correctamente");
-}
-    
+        int fila = tablaClientes.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un cliente de la tabla");
+            return;
+        }
+        String cedula = tablaClientes.getValueAt(fila, 0).toString();
+        int respuesta = JOptionPane.showConfirmDialog(this,
+                "¿Está seguro de eliminar este cliente?",
+                "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+        if (respuesta != JOptionPane.YES_OPTION) {
+            return;
+        }
+        try {
+            dao.eliminar(cedula);
+            cargarClientes();
+            limpiarCampos();
+            JOptionPane.showMessageDialog(this, "Cliente eliminado correctamente");
+        } catch (RuntimeException e) {
+            JOptionPane.showMessageDialog(this, "Error de base de datos: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void txtCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaActionPerformed
