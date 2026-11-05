@@ -69,7 +69,7 @@ public class Principal {
 
         // MECÁNICOS
         Mecanico mecanico1 = new Mecanico(
-                1,
+                "11661122",
                 "Carlos",
                 "Mecanica General",
                 "116610808",
@@ -78,7 +78,7 @@ public class Principal {
         );
 
         Mecanico mecanico2 = new Mecanico(
-                2,
+               "16587777",
                 "Miguel",
                 "Sistema de frenos",
                 "88887777",

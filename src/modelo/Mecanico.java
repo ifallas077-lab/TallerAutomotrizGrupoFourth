@@ -1,16 +1,21 @@
+
 package modelo;
 
 public class Mecanico {
-    
-  private int id;
+
+    private String cedula;
     private String nombre;
     private String especialidad;
-    private String telefono;  
+    private String telefono;
     private String correo;
     private boolean estado;
 
-    public Mecanico(int id, String nombre, String especialidad, String telefono, String correo, boolean estado) {
-        this.id = id;
+    public Mecanico() {
+    }
+
+    public Mecanico(String cedula, String nombre, String especialidad,
+            String telefono, String correo, boolean estado) {
+        this.cedula = cedula;
         this.nombre = nombre;
         this.especialidad = especialidad;
         this.telefono = telefono;
@@ -18,12 +23,6 @@ public class Mecanico {
         this.estado = estado;
     }
 
- 
-    
-    
-    
-    
-    
     public String getCorreo() {
         return correo;
     }
@@ -31,9 +30,9 @@ public class Mecanico {
     public boolean isEstado() {
         return estado;
     }
-    
-    public int getId() {
-        return id;
+
+    public String getCedula() {
+        return cedula;
     }
 
     public String getNombre() {
@@ -48,8 +47,8 @@ public class Mecanico {
         return telefono;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
     }
 
     public void setNombre(String nombre) {
@@ -71,17 +70,14 @@ public class Mecanico {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
-    
-    
-    
-   public void mostrarInformacion() {
 
-    System.out.println("ID: " + id);
-    System.out.println("Nombre: " + nombre);
-    System.out.println("Especialidad: " + especialidad);
-    System.out.println("Teléfono: " + telefono);
-    System.out.println("Correo: " + correo);
-System.out.println("Estado: " + (estado ? "Activo" : "Inactivo"));
-} 
-    
+    public void mostrarInformacion() {
+
+        System.out.println("Cedula: " + cedula);
+        System.out.println("Nombre: " + nombre);
+        System.out.println("Especialidad: " + especialidad);
+        System.out.println("Teléfono: " + telefono);
+        System.out.println("Correo: " + correo);
+        System.out.println("Estado: " + (estado ? "Activo" : "Inactivo"));
+    }
 }
