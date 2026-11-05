@@ -75,6 +75,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         btnServicios.setText("SERVICIOS");
         btnServicios.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnServicios.addActionListener(this::btnServiciosActionPerformed);
 
         btnCerrarSesion.setText("CERRAR SESION");
         btnCerrarSesion.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -171,6 +172,10 @@ GestionVehiculos ventana = new GestionVehiculos(rol);
 ventana.setVisible(true);
 this.dispose();
     }//GEN-LAST:event_btnVehiculosActionPerformed
+
+    private void btnServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnServiciosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnServiciosActionPerformed
 
     /**
      * @param args the command line arguments
